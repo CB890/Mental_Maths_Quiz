@@ -378,10 +378,7 @@
         <div class="question" id="question"></div>
     </div>
     
-    <div class="audio-controls">
-        <button class="replay-btn" id="replayBtn">Listen Again</button>
-        <div class="plays-left" id="playsLeft">2 plays left</div>
-    </div>
+    <!-- Listen Again option removed as requested -->
     
     <div class="timer-container">
         Time remaining: <span class="timer" id="timer">10</span> seconds
@@ -424,7 +421,6 @@
     const quizScreen = document.getElementById('quizScreen');
     const resultsScreen = document.getElementById('resultsScreen');
     const startBtn = document.getElementById('startBtn');
-    const replayBtn = document.getElementById('replayBtn');
     const submitBtn = document.getElementById('submitBtn');
     const restartBtn = document.getElementById('restartBtn');
     const characters = document.querySelectorAll('.character');
@@ -437,7 +433,6 @@
     const scoreElement = document.getElementById('score');
     const resultsMessage = document.getElementById('resultsMessage');
     const resultsList = document.getElementById('resultsList');
-    const playsLeftElement = document.getElementById('playsLeft');
     
     // Quiz State
     let currentQuestionIndex = 0;
@@ -448,7 +443,6 @@
     let speechSynthesis = window.speechSynthesis;
     let speechUtterance = new SpeechSynthesisUtterance();
     let readings = 0;
-    let playsLeft = 2;
     let answers = [];
     let isSpeaking = false;
     let isTimerRunning = false;
@@ -471,7 +465,6 @@
         
         // Event Listeners
         startBtn.addEventListener('click', startQuiz);
-        replayBtn.addEventListener('click', replayQuestion);
         submitBtn.addEventListener('click', submitAnswer);
         answerInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -555,7 +548,6 @@
         // Reset state for new question
         secondsLeft = 10;
         readings = 0;
-        playsLeft = 2;
         isSpeaking = false;
         isTimerRunning = false;
         
@@ -566,7 +558,6 @@
         timerElement.textContent = secondsLeft;
         currentQuestionElement.textContent = currentQuestionIndex + 1;
         progressBar.style.width = `${(currentQuestionIndex / questions.length) * 100}%`;
-        playsLeftElement.textContent = `${playsLeft} plays left`;
         
         // Set question text
         const currentQuestion = questions[currentQuestionIndex];
@@ -603,7 +594,6 @@
             } else if (readings === 2) {
                 // After second reading, start timer and enable input
                 isSpeaking = false;
-                replayBtn.disabled = false;
                 startTimer();
                 answerInput.disabled = false;
                 answerInput.focus();
